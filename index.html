@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>ของขวัญสำหรับอีฟ 💙</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #74c0fc, #a5d8ff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+}
+
+.gift {
+    position: relative;
+    width: 220px;
+    height: 160px;
+    cursor: pointer;
+}
+
+.box {
+    width: 100%;
+    height: 100%;
+    background: #339af0;
+    border-radius: 15px;
+    position: absolute;
+    bottom: 0;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.lid {
+    width: 240px;
+    height: 55px;
+    background: #4dabf7;
+    position: absolute;
+    top: -25px;
+    left: -10px;
+    border-radius: 15px;
+    transform-origin: bottom;
+    transition: transform 1s ease;
+}
+
+.ribbon {
+    position: absolute;
+    width: 25px;
+    height: 160px;
+    background: #e7f5ff;
+    left: 98px;
+    top: -25px;
+}
+
+.message-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 90vw;
+    max-width: 500px;
+    transform: translate(-50%, -50%) scale(0);
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    padding: 25px;
+    border-radius: 20px;
+    color: #ffffff;
+    text-align: center;
+    opacity: 0;
+    transition: all 1s ease;
+    box-shadow: 0 0 30px rgba(255,255,255,0.3);
+}
+
+.message-box h1 {
+    margin-top: 0;
+    font-size: 26px;
+}
+
+.message {
+    font-size: 18px;
+    line-height: 1.7;
+    white-space: pre-line;
+}
+
+.open .lid {
+    transform: rotateX(160deg);
+}
+
+.open .message-box {
+    transform: translate(-50%, -60%) scale(1);
+    opacity: 1;
+}
+
+.heart, .star {
+    position: absolute;
+    animation: float 4s linear infinite;
+    opacity: 0.8;
+}
+
+.heart {
+    color: #ff6b6b;
+    font-size: 22px;
+}
+
+.star {
+    color: #ffffff;
+    font-size: 14px;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-200px); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="gift" onclick="openGift()">
+    <div class="lid"></div>
+    <div class="box"></div>
+    <div class="ribbon"></div>
+</div>
+
+<div class="message-box">
+    <h1>💙 ครบรอบ 3 ปี นะอีฟ 💙</h1>
+    <div class="message" id="text"></div>
+</div>
+
+<!-- ใส่เพลงรัก (เปลี่ยนลิงก์ได้) -->
+<audio id="music" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7c8b0b4c3a.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const messageText = `
+สามปีแล้วนะ ที่เราเดินมาด้วยกัน
+มันอาจไม่ได้สวยงามทุกวัน
+แต่ทุกวันที่มีเธออยู่ มันมีความหมายเสมอ
+
+ขอบคุณที่ยังจับมือกันไว้
+ในวันที่เหนื่อย วันที่ท้อ วันที่โลกไม่ใจดี
+เธอคือเหตุผลที่ทำให้เรายังอยากยิ้ม
+ยังอยากพยายาม และยังอยากมีวันพรุ่งนี้
+
+ไม่รู้ว่าอนาคตจะเป็นยังไง
+แต่ถ้ามีเธออยู่ข้างๆ
+เรารู้เลยว่าเราจะไม่กลัวอะไรอีกแล้ว
+
+ครบรอบ 3 ปีนี้
+อยากบอกว่า “รักนะ”
+รักมากขึ้นทุกวัน
+และอยากรักแบบนี้ไปเรื่อยๆ
+ตราบเท่าที่หัวใจเรายังเต้นเพื่อเธอ 💙
+`;
+
+let index = 0;
+
+function openGift() {
+    document.querySelector('.gift').classList.add('open');
+    document.querySelector('.message-box').classList.add('open');
+
+    document.getElementById('music').play();
+
+    const textEl = document.getElementById('text');
+    textEl.innerHTML = "";
+
+    const typing = setInterval(() => {
+        textEl.innerHTML += messageText[index];
+        index++;
+        if (index >= messageText.length) clearInterval(typing);
+    }, 40);
+
+    for (let i = 0; i < 30; i++) {
+        createFloating(i % 2 === 0 ? 'heart' : 'star');
+    }
+}
+
+function createFloating(type) {
+    const el = document.createElement('div');
+    el.className = type;
+    el.innerHTML = type === 'heart' ? '💙' : '✨';
+    el.style.left = Math.random() * window.innerWidth + 'px';
+    el.style.top = window.innerHeight + 'px';
+    el.style.fontSize = (14 + Math.random() * 20) + 'px';
+    document.body.appendChild(el);
+
+    setTimeout(() => el.remove(), 4000);
+}
+</script>
+
+</body>
+</html>
